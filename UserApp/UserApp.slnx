@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="CleanCode.Application/UserApp.Application.csproj" />
+    <Project Path="UserApp.Domain/UserApp.Domain.csproj" />
+  </Folder>
+</Solution>
