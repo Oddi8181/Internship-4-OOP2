@@ -6,48 +6,21 @@ using UserApp.Application.Common.Validation.ValidationItems;
 
 namespace UserApp.Application.Common.Model
 {
-    public class Result<TValue> where TValue : class
+    public class Result<T> where T : class
     {
-        private List<ValidationResult> _infos = new List<ValidationResult>();
-        private List<ValidationResult> _warnings = new List<ValidationResult>();
-        private List<ValidationResult> _errors = new List<ValidationResult>();
+        public bool Success { get; private set; }
+        public T? Value { get; private set; }
+        public ValidationResult? ValidationResult { get; private set; }
 
-        public TValue? Value { get; set; }
-        public Guid RequestId { get; set; }
-        public bool IsAuthorized { get; set; } = true;
-        public IReadOnlyList<ValidationResult> Infos
-        {
-            get => _infos.AsReadOnly();
-            init => _infos.AddRange(value);
-        }
-        public IReadOnlyList<ValidationResult> Errors
-        {
-            get => _errors.AsReadOnly();
-            init => _errors.AddRange(value);
-        }
-        public IReadOnlyList<ValidationResult> Warnings
-        {
-            get => _warnings.AsReadOnly();
-            init => _warnings.AddRange(value);
-        }
 
-        public bool HasErrors => Errors.Any(r => r.HasErrors);
-
-        public void SetResult(TValue value)
+        private Result(bool success, T? value, ValidationResult? validationResult)
         {
+            Success = success;
             Value = value;
+            ValidationResult = validationResult;
         }
+        public static Result<T> Ok(T value) => new Result<T>(true, value, null);
+        public static Result<T> Fail(ValidationResult validation) => new Result<T>(false, default, validation);
 
-        public void SetValidationResult(ValidationResult validationResult)
-        {
-            _warnings?.AddRange(validationResult.ValidationItems.Where(x => x.ValidationSeverity == ValidationSeverity.Warning).Select(x => ValidationResult.FromValidationItem(x)));
-        }
-        public void SetUnauthorizedResult()
-        {
-            Value = null;
-            IsAuthorized = false;
-        }
-
-        
     }
 }

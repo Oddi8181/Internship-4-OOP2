@@ -10,4 +10,12 @@
     <ProjectReference Include="..\UserApp.Domain\UserApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Companies\Commands\" />
+    <Folder Include="Companies\Models\" />
+    <Folder Include="Companies\Queries\" />
+    <Folder Include="Users\Models\" />
+    <Folder Include="Users\Queries\" />
+  </ItemGroup>
+
 </Project>
