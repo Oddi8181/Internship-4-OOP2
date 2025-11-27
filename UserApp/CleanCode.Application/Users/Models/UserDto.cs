@@ -13,7 +13,7 @@ namespace UserApp.Application.Users.Models
         public string Website { get; set; }
         public Company Company { get; set; }
         public bool IsActive { get; set; }
-
+        public string Phone { get; set; }
         public static UserDto From(User user)
         {
             if (user == null) return null;
@@ -27,6 +27,7 @@ namespace UserApp.Application.Users.Models
                 Website = user.Website,
                 Company = user.Company,
                 IsActive = user.IsActive,
+                Phone = user.Phone
             };
         }
     }

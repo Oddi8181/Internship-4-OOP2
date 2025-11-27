@@ -11,7 +11,8 @@
         public string Phone { get; set; }
         public string Website { get; set; }
         public ExternalCompanyDto Company { get; set; }
-    
+        public int? ExternalId { get; set; }
+
 
     }
 }

@@ -1,31 +1,37 @@
-﻿using System.Text.Json.Serialization;
+﻿
 
 namespace UserApp.Domain.Enteties.Users
 {
 
     public class Geo
     {
-        public Geo()
-        {
-        }
+        public int Id { get; set; }     
 
-        public Geo(decimal v1, decimal v2)
-        {
-            Lat = v1;
-            Lng = v2;
-        }
-
-        [JsonPropertyName("lat")]
         public decimal Lat { get; set; }
-        [JsonPropertyName("lng")]
         public decimal Lng { get; set; }
+
+        public Geo() { }
+
+        public Geo(decimal lat, decimal lng)
+        {
+            Lat = lat;
+            Lng = lng;
+        }
     }
 
     public class Address
     {
-        public Address()
-        {
-        }
+        public int Id { get; set; }     
+
+        public string Street { get; set; }
+        public string Suite { get; set; }
+        public string City { get; set; }
+        public string Zipcode { get; set; }
+
+        public int GeoId { get; set; }   
+        public Geo Geo { get; set; }
+
+        public Address() { }
 
         public Address(string street, string suite, string city, string zipcode, Geo geo)
         {
@@ -35,63 +41,50 @@ namespace UserApp.Domain.Enteties.Users
             Zipcode = zipcode;
             Geo = geo;
         }
-
-        [JsonPropertyName("street")]
-        public string Street { get; set; }
-        [JsonPropertyName("suite")]
-        public string Suite { get; set; }
-        [JsonPropertyName("city")]
-        public string City { get; set; }
-        [JsonPropertyName("zipcode")]
-        public string Zipcode { get; set; }
-        [JsonPropertyName("geo")]
-        public Geo Geo { get; set; } = new Geo();
     }
 
     public class User
     {
-        private int companyId;
-
         public int Id { get; set; }
-        [JsonPropertyName("name")]
+
         public string Name { get; set; }
-        [JsonPropertyName("username")]
         public string Username { get; set; }
-        [JsonPropertyName("email")]
-        public string Email { get; set; } 
+        public string Email { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        [JsonPropertyName("address")]
-        public Address Address { get; set; } = new Address();
-        [JsonPropertyName("phone")]
+
+        public Address Address { get; set; }
+
         public string Phone { get; set; }
-        [JsonPropertyName("website")]
         public string? Website { get; set; }
-        public string Password { get; set; } 
-        public DateTime CreatedAt { get; set; }
-        public bool IsActive { get; set; } = true;
-        [JsonPropertyName("company")]
-        public Company Company { get; set; } = new Company();
 
-        public User()
-        {
-            
-        }
+        public string? Password { get; private set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public User(string name, string username, string email, Address address, int companyId, string phone, string website)
+        public bool IsActive { get;  set; } = true;
+
+        public int CompanyId { get; set; }      
+        public Company Company { get; set; }
+
+        public int? ExternalId { get; set; }
+
+        public User() { }
+
+        public User(string name, string username, string email, Address address, int companyId, string phone, string website, int? externalId)
         {
             Name = name;
             Username = username;
             Email = email;
             Address = address;
-            this.companyId = companyId;
+            CompanyId = companyId;
             Phone = phone;
             Website = website;
+            ExternalId = externalId;
         }
 
-        public void SetPassword(string v)
+        public void SetPassword(string password)
         {
-            Password = v;
+            Password = password;
         }
 
         public void Deactivate()

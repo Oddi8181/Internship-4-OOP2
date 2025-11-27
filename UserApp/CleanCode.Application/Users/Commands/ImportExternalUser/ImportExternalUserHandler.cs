@@ -102,7 +102,8 @@ namespace UserApp.Application.Users.Commands.ImportExternalUser
                 address,
                 companyId,
                 external.Phone,
-                external.Website
+                external.Website,
+                external.ExternalId
             );
 
             user.SetPassword(Guid.NewGuid().ToString());

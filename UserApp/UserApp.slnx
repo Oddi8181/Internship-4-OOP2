@@ -2,5 +2,6 @@
   <Folder Name="/src/">
     <Project Path="CleanCode.Application/UserApp.Application.csproj" />
     <Project Path="UserApp.Domain/UserApp.Domain.csproj" />
+    <Project Path="UserApp.Infrastructure/UserApp.Infrastructure.csproj" Id="4e008026-55e8-43a2-a505-3331968875d5" />
   </Folder>
 </Solution>
