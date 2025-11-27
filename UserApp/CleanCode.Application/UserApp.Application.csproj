@@ -14,7 +14,6 @@
     <Folder Include="Companies\Commands\" />
     <Folder Include="Companies\Models\" />
     <Folder Include="Companies\Queries\" />
-    <Folder Include="Users\Models\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>
 

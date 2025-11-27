@@ -12,7 +12,7 @@ namespace UserApp.Domain.Persistance.Users
         Task DeleteAsync(int id);
         Task DeactivateAsync(int id);
         Task<IEnumerable<User>> GetAllUsers();
-
+        Task<bool> ExternalIdExists(int id);
         Task<bool> EmailExists(string mail);
         Task<bool> UsernameExists(string username);
     }

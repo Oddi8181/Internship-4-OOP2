@@ -1,4 +1,5 @@
 ﻿using UserApp.Application.Common.Model;
+using UserApp.Application.Users.Models;
 using UserApp.Domain.Enteties.Users;
 using UserApp.Domain.Persistance.Users;
 

@@ -5,6 +5,16 @@ namespace UserApp.Domain.Enteties.Users
 
     public class Geo
     {
+        public Geo()
+        {
+        }
+
+        public Geo(decimal v1, decimal v2)
+        {
+            Lat = v1;
+            Lng = v2;
+        }
+
         [JsonPropertyName("lat")]
         public decimal Lat { get; set; }
         [JsonPropertyName("lng")]
@@ -13,6 +23,19 @@ namespace UserApp.Domain.Enteties.Users
 
     public class Address
     {
+        public Address()
+        {
+        }
+
+        public Address(string street, string suite, string city, string zipcode, Geo geo)
+        {
+            Street = street;
+            Suite = suite;
+            City = city;
+            Zipcode = zipcode;
+            Geo = geo;
+        }
+
         [JsonPropertyName("street")]
         public string Street { get; set; }
         [JsonPropertyName("suite")]
@@ -27,7 +50,8 @@ namespace UserApp.Domain.Enteties.Users
 
     public class User
     {
-        
+        private int companyId;
+
         public int Id { get; set; }
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -52,6 +76,27 @@ namespace UserApp.Domain.Enteties.Users
         public User()
         {
             
+        }
+
+        public User(string name, string username, string email, Address address, int companyId, string phone, string website)
+        {
+            Name = name;
+            Username = username;
+            Email = email;
+            Address = address;
+            this.companyId = companyId;
+            Phone = phone;
+            Website = website;
+        }
+
+        public void SetPassword(string v)
+        {
+            Password = v;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
         }
     }
 }

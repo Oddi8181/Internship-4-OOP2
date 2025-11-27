@@ -6,7 +6,7 @@ using UserApp.Application.Common.Validation.ValidationItems;
 
 namespace UserApp.Application.Common.Model
 {
-    public class Result<T> where T : class
+    public class Result<T> 
     {
         public bool Success { get; private set; }
         public T? Value { get; private set; }

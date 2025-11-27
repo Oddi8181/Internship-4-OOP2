@@ -12,5 +12,6 @@ namespace UserApp.Domain.Persistance.Users
         Task DeleteAsync(int id);
         Task DeactivateAsync(int id);
         Task<IEnumerable<Company>> GetAllCompanies();
+        Task<Company> GetCompanyByName(object name);
     }
 }
