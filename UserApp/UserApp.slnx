@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="CleanCode.Application/UserApp.Application.csproj" />
+    <Project Path="UserApp.Api/UserApp.Api.csproj" Id="c689b0b0-e1d8-440d-a9d8-ad43c7535ed0" />
     <Project Path="UserApp.Domain/UserApp.Domain.csproj" />
     <Project Path="UserApp.Infrastructure/UserApp.Infrastructure.csproj" Id="4e008026-55e8-43a2-a505-3331968875d5" />
   </Folder>

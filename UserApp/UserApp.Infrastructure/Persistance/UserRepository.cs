@@ -12,6 +12,17 @@ namespace UserApp.Infrastructure.Persistance
         {
             _ctx = ctx;
         }
+        public async Task<User?> GetByUsername(string username)
+        {
+            return await _ctx.Users.FirstOrDefaultAsync(u => u.Username == username);
+        }
+
+        public async Task<User?> GetByCredentials(string username, string password)
+        {
+            return await _ctx.Users.FirstOrDefaultAsync(
+                u => u.Username == username && u.Password == password
+            );
+        }
 
         public async Task DeactivateAsync(int id)
         {
@@ -69,13 +80,16 @@ namespace UserApp.Infrastructure.Persistance
                     _ctx.Geos.Add(user.Address.Geo);
                 if(user.Address.Id == 0)
                     _ctx.Addresses.Add(user.Address);
+                user.CreatedAt = DateTime.UtcNow;
             }
+            
             _ctx.Users.Add(user);
             await _ctx.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(User user)
         {
+            user.CreatedAt = DateTime.UtcNow;
             _ctx.Users.Update(user);
             await _ctx.SaveChangesAsync();
         }

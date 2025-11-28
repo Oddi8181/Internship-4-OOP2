@@ -1,4 +1,5 @@
-﻿using UserApp.Application.Users.Models;
+﻿using UserApp.Application.Common.Model;
+using UserApp.Application.Users.Models;
 using UserApp.Domain.Persistance.Users;
 
 namespace UserApp.Application.Users.Queries
@@ -16,10 +17,11 @@ namespace UserApp.Application.Users.Queries
             _userRepository = userRepository;
         }
         
-        public async Task<IEnumerable<UserDto>> Hadle()
+        public async Task<Result<List<UserDto>>> Handle()
         {
             var users = await _userRepository.GetAllUsers();
-            return users.Select(UserDto.From);
+            var dto = users.Select(UserDto.From).ToList();
+            return Result<List<UserDto>>.Ok(dto);
         }
     }
 }

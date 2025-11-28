@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UserApp.Domain.Enteties.Users;
+using UserApp.Infrastructure.Persistance.Configurations;
 
 namespace UserApp.Infrastructure.Persistance
 {

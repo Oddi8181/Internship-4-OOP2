@@ -6,6 +6,8 @@ namespace UserApp.Domain.Persistance.Users
 {
     public interface IUserRepository
     {
+        Task<User?> GetByUsername(string username);        
+        Task<User?> GetByCredentials(string username, string password);
         Task<User> GetById(int id);
         Task InsertAsync(User user);
         Task UpdateAsync(User user);

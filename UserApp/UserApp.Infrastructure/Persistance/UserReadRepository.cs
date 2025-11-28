@@ -20,7 +20,7 @@ namespace UserApp.Infrastructure.Persistance
             _connectionString = connStr;
         }
         private NpgsqlConnection GetConn() => new NpgsqlConnection(_connectionString);
-        public async Task<IEnumerable<UserDto>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
             await using var conn = GetConn();
             var sql = @"
@@ -36,10 +36,10 @@ LEFT JOIN companies c ON c.id = u.companyid";
 
 
             var rows = await conn.QueryAsync<dynamic>(sql);
-            var list = new List<UserDto>();
+            var list = new List<User>();
             foreach (var row in rows)
             {
-                var dto = new UserDto
+                var dto = new User
                 {
                     Id = row.id,
                     Name = row.name,
@@ -75,7 +75,7 @@ LEFT JOIN companies c ON c.id = u.companyid";
             return list;
         }
 
-        public async Task<UserDto?> GetByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             await using var conn = GetConn();
             var sql = @"
@@ -93,7 +93,7 @@ LEFT JOIN companies c ON c.id = u.companyid";
             var result = await conn.QueryAsync<dynamic>(sql, new { Id = id });
             var row = result.FirstOrDefault();
             if (row == null) return null;
-            var dto = new UserDto
+            var dto = new User
             {
                 Id = row.id,
                 Name = row.name,

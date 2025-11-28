@@ -9,7 +9,7 @@ using UserApp.Domain.Persistance.Users;
 
 namespace UserApp.Application.Users.Commands.ImportExternalUser
 {
-    internal class ImportExternalUserHandler
+    public class ImportExternalUserHandler
     {
         private readonly IUserRepository _userRepository;
         private readonly IExternalUserService _externalUserService;

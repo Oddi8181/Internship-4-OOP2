@@ -12,15 +12,22 @@ namespace UserApp.Application.Common.Model
         public T? Value { get; private set; }
         public ValidationResult? ValidationResult { get; private set; }
 
-
+        public bool HasErrors => !Success;
         private Result(bool success, T? value, ValidationResult? validationResult)
         {
             Success = success;
             Value = value;
             ValidationResult = validationResult;
         }
-        public static Result<T> Ok(T value) => new Result<T>(true, value, null);
-        public static Result<T> Fail(ValidationResult validation) => new Result<T>(false, default, validation);
 
+        public static Result<T> Ok(T value)
+        {
+            return new Result<T>(true, value, null);
+        }
+
+        public static Result<T> Fail(ValidationResult validation)
+        {
+            return new Result<T>(false, default, validation);
+        }
     }
 }

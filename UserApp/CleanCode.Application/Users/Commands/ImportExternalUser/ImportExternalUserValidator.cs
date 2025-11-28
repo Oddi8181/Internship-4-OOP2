@@ -9,7 +9,7 @@ namespace UserApp.Application.Users.Commands.ImportExternalUser
     {
         private readonly IUserRepository _userRepository;
         private readonly ICompanyRepository _companyRepository;
-
+ 
         public ImportExternalUserValidator(IUserRepository userRepository, ICompanyRepository companyRepository)
         {
             _userRepository = userRepository;
