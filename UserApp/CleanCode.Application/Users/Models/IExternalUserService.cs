@@ -6,4 +6,5 @@ public interface IExternalUserService
 {
  
     Task<ExternalUserDto?> GetUser(int id);
+    Task<IReadOnlyList<ExternalUserDto>?> GetAllExternalUsers();
 }

@@ -37,10 +37,12 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserReadRepository, UserReadRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
+builder.Services.AddMemoryCache(); 
+builder.Services.AddScoped<ICacheService, MemoryCacheService>();
 builder.Services.AddHttpClient<IExternalUserService, ExternalUserService>(client =>
 {
     client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com/");
-});
+}).SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
 
 builder.Services.AddScoped<CreateUserHandler>();
