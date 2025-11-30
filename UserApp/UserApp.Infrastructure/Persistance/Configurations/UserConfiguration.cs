@@ -9,23 +9,32 @@ namespace UserApp.Infrastructure.Persistance.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("users");
-            builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Username).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Email).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Phone).HasMaxLength(50);
-            builder.Property(x => x.Password).IsRequired(false).HasMaxLength(500);
-            builder.Property(x => x.CreatedAt).IsRequired();
-            builder.Property(x => x.IsActive).IsRequired();
-           
+            builder.HasKey(u => u.Id);
+            builder.Property(u => u.Id).HasColumnName("id");
+
+            builder.Property(u => u.Name).HasColumnName("name");
+            builder.Property(u => u.Username).HasColumnName("username");
+            builder.Property(u => u.Email).HasColumnName("email");
+            builder.Property(u => u.Phone).HasColumnName("phone");
+            builder.Property(u => u.Website).HasColumnName("website");
+            builder.Property(u => u.Password).HasColumnName("password");
+            builder.Property(u => u.CreatedAt).HasColumnName("created_at");
+            builder.Property(u => u.IsActive).HasColumnName("is_active");
+
+            builder.Property(u => u.CompanyId).HasColumnName("company_id");
+            builder.Property(u => u.AddressId).HasColumnName("address_id");
+            builder.Property(u => u.ExternalId).HasColumnName("external_id");
+            builder.Property(u => u.DateOfBirth).HasColumnName("date_of_birth");
 
             builder.HasOne(u => u.Address)
                 .WithMany()
-                .HasForeignKey("AddressId")
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(u => u.AddressId);
 
-            builder.Property(x => x.CompanyId).IsRequired();
+            builder.HasOne(u => u.Company)
+                .WithMany()
+                .HasForeignKey(u => u.CompanyId);
         }
     }
+
 }

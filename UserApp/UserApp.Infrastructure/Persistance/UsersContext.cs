@@ -7,6 +7,7 @@ namespace UserApp.Infrastructure.Persistance
     public class UsersContext : DbContext
     {
         public UsersContext(DbContextOptions<UsersContext> options) : base(options) { }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Geo> Geos { get; set; }
@@ -17,6 +18,5 @@ namespace UserApp.Infrastructure.Persistance
             modelBuilder.ApplyConfiguration(new AddressConfiguration());
             modelBuilder.ApplyConfiguration(new GeoConfiguration());
         }
-
     }
 }

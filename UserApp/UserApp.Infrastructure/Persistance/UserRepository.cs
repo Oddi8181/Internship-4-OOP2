@@ -12,21 +12,23 @@ namespace UserApp.Infrastructure.Persistance
         {
             _ctx = ctx;
         }
+
         public async Task<User?> GetByUsername(string username)
         {
-            return await _ctx.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await _ctx.Users
+                .FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<User?> GetByCredentials(string username, string password)
         {
-            return await _ctx.Users.FirstOrDefaultAsync(
-                u => u.Username == username && u.Password == password
-            );
+            return await _ctx.Users
+                .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
 
         public async Task DeactivateAsync(int id)
         {
             var user = await _ctx.Users.FindAsync(id);
+
             if (user != null)
             {
                 user.Deactivate();
@@ -36,10 +38,11 @@ namespace UserApp.Infrastructure.Persistance
 
         public async Task DeleteAsync(int id)
         {
-            var u = await _ctx.Users.FindAsync(id);
-            if(u != null)
+            var user = await _ctx.Users.FindAsync(id);
+
+            if (user != null)
             {
-                _ctx.Users.Remove(u);
+                _ctx.Users.Remove(user);
                 await _ctx.SaveChangesAsync();
             }
         }
@@ -56,40 +59,25 @@ namespace UserApp.Infrastructure.Persistance
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await _ctx.Users
-                .Include(u => u.Address)
-                .ThenInclude(a => a.Geo)
-                .Include(u => u.Company)
-                .ToListAsync();
+          
+            return await _ctx.Users.ToListAsync();
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User?> GetById(int id)
         {
-            return await _ctx.Users
-                .Include(u => u.Address)
-                .ThenInclude(a => a.Geo)
-                .Include(u => u.Company)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            return await _ctx.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task InsertAsync(User user)
         {
-            if(user.Address != null)
-            {
-                if(user.Address.Geo != null && user.Address.Geo.Id == 0)
-                    _ctx.Geos.Add(user.Address.Geo);
-                if(user.Address.Id == 0)
-                    _ctx.Addresses.Add(user.Address);
-                user.CreatedAt = DateTime.UtcNow;
-            }
-            
+            user.CreatedAt = DateTime.UtcNow;
+
             _ctx.Users.Add(user);
             await _ctx.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(User user)
         {
-            user.CreatedAt = DateTime.UtcNow;
             _ctx.Users.Update(user);
             await _ctx.SaveChangesAsync();
         }

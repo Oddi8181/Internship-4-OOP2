@@ -6,31 +6,11 @@ namespace UserApp.Infrastructure.Persistance
 {
     public class CompanyRepository : ICompanyRepository
     {
-
         private readonly CompanyContext _ctx;
+
         public CompanyRepository(CompanyContext ctx)
         {
             _ctx = ctx;
-        }
-
-        public async Task DeactivateAsync(int id)
-        {
-            var c = await _ctx.Companies.FindAsync(id);
-            if (c != null)
-            {
-                
-                await _ctx.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var c = await _ctx.Companies.FindAsync(id);
-            if (c != null)
-            {
-                _ctx.Companies.Remove(c);
-                await _ctx.SaveChangesAsync();
-            }
         }
 
         public async Task<IEnumerable<Company>> GetAllCompanies()
@@ -43,14 +23,10 @@ namespace UserApp.Infrastructure.Persistance
             return await _ctx.Companies.FindAsync(id);
         }
 
-        public async Task<Company> GetCompanyByName(object name)
+        public async Task<Company?> GetCompanyByName(string name)
         {
-            var company = await _ctx.Companies.FirstOrDefaultAsync(c => c.Name == (string)name);
-            if (company == null)
-            {
-                throw new InvalidOperationException($"Company with name '{name}' not found.");
-            }
-            return company;
+            return await _ctx.Companies
+                .FirstOrDefaultAsync(c => c.Name == name);
         }
 
         public async Task InsertAsync(Company company)
@@ -64,5 +40,18 @@ namespace UserApp.Infrastructure.Persistance
             _ctx.Companies.Update(company);
             await _ctx.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var company = await _ctx.Companies.FindAsync(id);
+
+            if (company != null)
+            {
+                _ctx.Companies.Remove(company);
+                await _ctx.SaveChangesAsync();
+            }
+        }
+
+
     }
 }

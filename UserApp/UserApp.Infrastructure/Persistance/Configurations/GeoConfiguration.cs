@@ -4,16 +4,22 @@ using UserApp.Domain.Enteties.Users;
 
 namespace UserApp.Infrastructure.Persistance.Configurations
 {
-    internal class GeoConfiguration : IEntityTypeConfiguration<Geo>
+    public class GeoConfiguration : IEntityTypeConfiguration<Geo>
     {
         public void Configure(EntityTypeBuilder<Geo> builder)
         {
-            builder.ToTable("geos");
-            builder.HasKey(x => x.Id);
+            builder.ToTable("geo");
 
+            builder.HasKey(g => g.Id);
+            builder.Property(g => g.Id).HasColumnName("id");
 
-            builder.Property(x => x.Lat).HasColumnType("numeric(10,6)");
-            builder.Property(x => x.Lng).HasColumnType("numeric(10,6)");
+            builder.Property(g => g.Lat)
+                .HasColumnName("lat")
+                .IsRequired();
+
+            builder.Property(g => g.Lng)
+                .HasColumnName("lng")
+                .IsRequired();
         }
     }
 }

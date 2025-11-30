@@ -8,7 +8,7 @@ namespace UserApp.Domain.Persistance.Users
     {
         Task<User?> GetByUsername(string username);        
         Task<User?> GetByCredentials(string username, string password);
-        Task<User> GetById(int id);
+        Task<User?> GetById(int id);
         Task InsertAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(int id);

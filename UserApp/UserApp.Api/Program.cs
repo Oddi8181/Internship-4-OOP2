@@ -56,17 +56,26 @@ builder.Services.AddScoped<DeleteCompanyHandler>();
 builder.Services.AddScoped<GetAllCompaniesHandler>();
 builder.Services.AddScoped<GetCompanyByIdHandler>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("default", p =>
+        p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+});
 
 var app = builder.Build();
+Console.WriteLine("USERS DB = " + builder.Configuration.GetConnectionString("UsersDb"));
+Console.WriteLine("COMPANY DB = " + builder.Configuration.GetConnectionString("CompanyDb"));
 
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors("default");
+
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(/*c => c.RoutePrefix = "swagger"*/);
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
